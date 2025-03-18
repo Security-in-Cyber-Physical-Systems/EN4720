@@ -3,7 +3,7 @@ import base64
 import os
 import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import hashes, padding
 from cryptography.hazmat.backends import default_backend
 
 app = Flask(__name__)
@@ -28,6 +28,31 @@ def generate_key():
     keys[key_id] = base64.b64decode(key_value)
     
     return jsonify({"key_id": key_id, "key_value": key_value})
+
+def encrypt_aes(key, plaintext):
+    iv = os.urandom(16)
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+
+    pkcs7_padder = padding.PKCS7(algorithms.AES.block_size).padder()
+    padded_plaintext = pkcs7_padder.update(plaintext.encode()) + pkcs7_padder.finalize()
+    encryptor = cipher.encryptor()
+    cipher_text = encryptor.update(padded_plaintext) + encryptor.finalize()
+    return base64.b64encode(cipher_text).decode('utf-8')
+
+
+@app.route('/encrypt', methods=['POST'])
+def encrypt():
+    data = request.json
+    key_id = data.get('key_id')
+    plaintext = data.get('plaintext')
+    algorithm = data.get('algorithm')
+    
+    if key_id not in keys or algorithm != "AES":
+        return jsonify({"error": "Invalid key or algorithm"}), 400
+    
+    ciphertext = encrypt_aes(keys[key_id], plaintext)
+    return jsonify({"ciphertext": ciphertext})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
