@@ -17,7 +17,7 @@ else:
     print("Error:", response.json())
 
 # Encrypt a plaintext using the generated key
-key_id = "1"
+key_id =  data.get("key_id")
 plaintext = "Hello, AES encryption!"
 algorithm = "AES"
 payload = {
@@ -29,6 +29,22 @@ headers = {'Content-Type': 'application/json'}
 response = requests.post(url + "encrypt", data=json.dumps(payload), headers=headers)
 if response.status_code == 200:
     data = response.json()
-    print("Ciphertext:", data.get("ciphertext"))
+    print("ciphertext:", data.get("ciphertext"))
+else:
+    print("Error:", response.json())
+
+# Decrypt the ciphertext using the generated key
+ciphertext = data.get("ciphertext")
+algorithm = "AES"
+payload = {
+    "key_id": key_id,
+    "ciphertext": ciphertext,
+    "algorithm": algorithm
+}
+headers = {'Content-Type': 'application/json'}
+response = requests.post(url + "decrypt", data=json.dumps(payload), headers=headers)
+if response.status_code == 200:
+    data = response.json()
+    print("plaintext:", data.get("plaintext"))
 else:
     print("Error:", response.json())
