@@ -48,3 +48,35 @@ if response.status_code == 200:
     print("plaintext:", data.get("plaintext"))
 else:
     print("Error:", response.json())
+
+# Generate hash of a data using SHA-256
+data = "Hello, hash process!"
+algorithm = "SHA-256"
+payload = {
+    "data": data,
+    "algorithm": algorithm
+}
+headers = {'Content-Type': 'application/json'}
+response = requests.post(url + "generate-hash", data=json.dumps(payload), headers=headers)
+if response.status_code == 200:
+    response = response.json()
+    print("hash:", response.get("hash_value"))
+else:
+    print("Error:", response.json())
+
+# Vreify hash of a data using SHA-512
+data = "Hello, hash process!"
+algorithm = "SHA-256"
+hash_value = response.get("hash_value")
+payload = {
+    "data": data,
+    "hash_value": hash_value,
+    "algorithm": algorithm
+}
+headers = {'Content-Type': 'application/json'}
+response = requests.post(url + "verify-hash", data=json.dumps(payload), headers=headers)
+if response.status_code == 200:
+    data = response.json()
+    print("Verification:", data.get("is_valid"))
+else:
+    print("Error:", response.json())

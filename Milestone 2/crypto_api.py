@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import base64
 import os
+import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
@@ -73,6 +74,47 @@ def decrypt():
     
     plaintext = decrypt_aes(keys[key_id], ciphertext)
     return jsonify({"plaintext": plaintext})
+
+def comput_hash(data, algorithm="SHA-256"):
+    if algorithm == "SHA-256":
+        hash_value = hashlib.sha256(data.encode()).digest()
+    elif algorithm == "SHA-512":
+        hash_value = hashlib.sha512(data.encode()).digest()
+    else:
+        return None
+    
+    return base64.b64encode(hash_value).decode('utf-8')
+
+@app.route('/generate-hash', methods=['POST'])
+def generate_hash_api():
+    data = request.json
+    text = data.get('data')
+    algorithm = data.get('algorithm', "SHA-256")
+    
+    hash_value = comput_hash(text, algorithm)
+    if hash_value is None:
+        return jsonify({"error": "Invalid hashing algorithm"}), 400
+    
+    return jsonify({"hash_value": hash_value, "algorithm": algorithm})
+
+
+@app.route('/verify-hash', methods=['POST'])
+def verify_hash():
+    data = request.json
+    message = data.get("data")
+    given_hash = data.get("hash_value")
+    algorithm = data.get("algorithm")
+
+    if algorithm not in ["SHA-256", "SHA-512"]:
+        return jsonify({"error": "Unsupported hashing algorithm"}), 400
+
+    computed_hash = comput_hash(message, algorithm)
+
+    if computed_hash == given_hash:
+        return jsonify({"is_valid": True, "message": "Hash matches the data."})
+    else:
+        return jsonify({"is_valid": False, "message": "Hash does not match."})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
