@@ -1,0 +1,195 @@
+swagger: "2.0"
+info:
+  title: "Encryption and Hashing API"
+  description: "API for AES encryption, decryption, and hash generation"
+  version: "1.0"
+
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+
+tags:
+  - name: "1. Key Management"
+    description: "API endpoints for generating encryption keys"
+  - name: "2. Encryption"
+    description: "API endpoints for encrypting data"
+  - name: "3. Decryption"
+    description: "API endpoints for decrypting data"
+  - name: "4. Hashing"
+    description: "API endpoints for generating cryptographic hashes"
+  - name: "5. Digesting"
+    description: "API endpoints for verifying hashes"
+
+paths:
+  /generate-key:
+    post:
+      summary: "Generate an AES Key"
+      description: "Generates an AES encryption key with the specified size."
+      tags:
+        - "1. Key Management"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              key_type:
+                type: string
+                example: "AES"
+              key_size:
+                type: integer
+                example: 256
+      responses:
+        200:
+          description: "Key generated successfully"
+          schema:
+            type: object
+            properties:
+              key_id:
+                type: string
+                example: "1"
+              key_value:
+                type: string
+                example: "M2I0YjMyMTQ5NzYyMzI5OTkzYTYyMDA1N2NmZGU1OTM2MjE3MDNlYzY0NmMyMGQ0YjM2NzEzYzJhY2Y5YjFhNDFjYjY3YmE0Y2FlYzMwYmFkZDZkMTM1MDY0OWFmZDRmZjk1ZDZkMjA2"
+        400:
+          description: "Invalid key type or size"
+
+  /encrypt:
+    post:
+      summary: "Encrypt Data"
+      description: "Encrypts a given plaintext using AES encryption."
+      tags:
+        - "2. Encryption"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              key_id:
+                type: string
+                example: "1"
+              plaintext:
+                type: string
+                example: "Hello, AES encryption!"
+              algorithm:
+                type: string
+                example: "AES"
+      responses:
+        200:
+          description: "Successfully encrypted"
+          schema:
+            type: object
+            properties:
+              ciphertext:
+                type: string
+                example: "V6cMcV+kO5PL0as9sFsbXw=="
+        400:
+          description: "Invalid key or algorithm"
+
+  /decrypt:
+    post:
+      summary: "Decrypt Data"
+      description: "Decrypts an AES-encrypted ciphertext."
+      tags:
+        - "3. Decryption"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              key_id:
+                type: string
+                example: "1"
+              ciphertext:
+                type: string
+                example: "V6cMcV+kO5PL0as9sFsbXw=="
+              algorithm:
+                type: string
+                example: "AES"
+      responses:
+        200:
+          description: "Successfully decrypted"
+          schema:
+            type: object
+            properties:
+              plaintext:
+                type: string
+                example: "Hello, AES encryption!"
+        400:
+          description: "Invalid key or algorithm"
+
+  /generate-hash:
+    post:
+      summary: "Generate Hash"
+      description: "Creates a cryptographic hash (SHA-256 or SHA-512) for a given input."
+      tags:
+        - "4. Hashing"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                example: "Hello, hash process!"
+              algorithm:
+                type: string
+                example: "SHA-256"
+      responses:
+        200:
+          description: "Hash generated successfully"
+          schema:
+            type: object
+            properties:
+              hash_value:
+                type: string
+                example: "2cf24dba5fb0a30e26e83b2ac5b9e29e1b1690c088b55fa6d7af413f4a3e5d3f"
+              algorithm:
+                type: string
+                example: "SHA-256"
+        400:
+          description: "Invalid hashing algorithm"
+
+  /verify-hash:
+    post:
+      summary: "Verify Hash"
+      description: "Checks if a hash matches a given input."
+      tags:
+        - "5. Digesting"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                example: "Hello, hash process!"
+              hash_value:
+                type: string
+                example: "2cf24dba5fb0a30e26e83b2ac5b9e29e1b1690c088b55fa6d7af413f4a3e5d3f"
+              algorithm:
+                type: string
+                example: "SHA-256"
+      responses:
+        200:
+          description: "Hash verified"
+          schema:
+            type: object
+            properties:
+              is_valid:
+                type: boolean
+                example: true
+              message:
+                type: string
+                example: "Hash matches the data."
+        400:
+          description: "Invalid hashing algorithm"

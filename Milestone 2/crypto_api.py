@@ -5,8 +5,10 @@ import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
+from flasgger import Swagger
 
 app = Flask(__name__)
+swagger = Swagger(app, template_file="swagger.yml")
 
 keys = {}
 
