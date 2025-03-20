@@ -17,7 +17,8 @@ else:
     print("Error:", response.json())
 
 # Encrypt a plaintext using the generated key
-key_id =  response.json.get("key_id")
+data =  response.json()
+key_id = data.get("key_id")
 plaintext = "Hello, AES encryption!"
 algorithm = "AES"
 payload = {

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 import base64
 import os
 import hashlib
@@ -11,6 +11,10 @@ app = Flask(__name__)
 swagger = Swagger(app, template_file="swagger.yml")
 
 keys = {}
+
+@app.route('/')
+def home():
+    return redirect('/apidocs')
 
 def generate_aes_key(key_size):
     key = os.urandom(key_size // 8)
