@@ -3,6 +3,7 @@ import json
 
 # Define the URL of the endpoint
 url = 'https://en4720-production.up.railway.app/'
+#url = 'http://127.0.0.1:5000/'
 
 # Generate an AES key
 payload = { "key_type": "AES",

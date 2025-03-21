@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 Start the Flask server
 ```bash
-python crypto_api.py
+python app.py
 ```
 
 To test the API endpoints, open a separate terminal and run
