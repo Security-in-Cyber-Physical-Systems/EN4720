@@ -4,7 +4,8 @@ info:
   description: "API for AES encryption, decryption, and hash generation"
   version: "1.0"
 
-host: "en4720-production.up.railway.app"
+host: "en4720-production-d82d.up.railway.app"
+#"en4720-production.up.railway.app"
 schemes:
   - "https"
 
