@@ -19,6 +19,10 @@ tags:
     description: "API endpoints for generating cryptographic hashes"
   - name: "5. Digesting"
     description: "API endpoints for verifying hashes"
+  - name: "6. User Registration"
+    description: "API endpoints for user registration"
+  - name: "7. User Login"
+    description: "API endpoints for user login"
 
 paths:
   /generate-key:
@@ -193,3 +197,93 @@ paths:
                 example: "Hash matches the data."
         400:
           description: "Invalid hashing algorithm"
+
+  /register:
+    post:
+      summary: "Register User"
+      description: "Registers a user with a username and password."
+      tags:
+        - "6. User Registration"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: "user123"
+              password:
+                type: string
+                example: "securepassword"
+      responses:
+        201:
+          description: "User registered successfully"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User registered successfully"
+        400:
+          description: "Username and/or password is missing"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Username and/or password is missing."
+        409:
+          description: "Username already exists"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Username already exists"
+
+  /login:
+    post:
+      summary: "User Login"
+      description: "Authenticates a user by verifying their username and password."
+      tags:
+        - "7. User Login"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                example: "user123"
+              password:
+                type: string
+                example: "securepassword"
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Correct password. Login Sucessful"
+        401:
+          description: "Incorrect password"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Incorrect password"
+        404:
+          description: "User not found"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User not found"

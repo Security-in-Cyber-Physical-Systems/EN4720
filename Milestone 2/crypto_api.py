@@ -6,6 +6,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.backends import default_backend
 from flasgger import Swagger
+import bcrypt
 
 app = Flask(__name__)
 swagger = Swagger(app, template_file="swagger.yml")
@@ -117,6 +118,47 @@ def verify_hash():
     else:
         return jsonify({"is_valid": False, "message": "Hash does not match."})
 
+keys = {}
+users = {}  
+
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode(), salt)
+    return base64.b64encode(salt + hashed).decode('utf-8')
+
+def verify_password(password, stored_hash):
+    decoded = base64.b64decode(stored_hash)
+    salt, stored_hashed_password = decoded[:29], decoded[29:]
+    return bcrypt.checkpw(password.encode(), stored_hashed_password)
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    
+    if not username or not password:
+        return jsonify({"error": "Username and/or password is missing."}), 400
+    
+    if username in users:
+        return jsonify({"error": "Username already exists"}), 409
+    
+    users[username] = hash_password(password)
+    return jsonify({"message": "User registered successfully"}),201
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    
+    if username not in users:
+        return jsonify({"message": "User not found"}), 404
+    
+    if verify_password(password, users[username]):
+        return jsonify({"message": "Correct password. Login Sucessful"}), 200
+    else:
+        return jsonify({"message": "Incorrect password"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True)
