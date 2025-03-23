@@ -170,6 +170,7 @@ This project implements a **Cryptographic API** using the Flask framework in Pyt
     "password": "securepassword"
   }
   ```
+  
   **Response**
   ```json
   {
