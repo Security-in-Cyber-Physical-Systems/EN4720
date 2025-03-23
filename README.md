@@ -49,3 +49,130 @@ This project implements a **Cryptographic API** using the Flask framework in Pyt
 
 1. Clone the repository
 2. All the other instructions are given inside the `Milestone 2`
+
+## API Endpoints
+
+### 1. Key Management
+- **POST /generate-key**:  
+  Generate an AES key of a specified size (128, 192, or 256 bits).  
+  **Request Body**:
+  ```json
+  {
+    "key_type": "AES",
+    "key_size": 256
+  }
+  ```
+  **Response**
+  ```json
+  {
+  "key_id": "1",
+  "key_value": "M2I0YjMyMTQ5NzYyMzI5OTkzYTYyMDA1N2NmZGU1OTM2MjE3MDNlYzY0NmMyMGQ0YjM2NzEzYzJhY2Y5YjFhNDFjYjY3YmE0Y2FlYzMwYmFkZDZkMTM1MDY0OWFmZDRmZjk1ZDZkMjA2"
+  }
+  ```
+
+### 2. Encryption
+- **POST /encrypt**:  
+  Encrypt plaintext using AES encryption. 
+  **Request Body**:
+  ```json
+  {
+    "key_id": "1",
+    "plaintext": "Hello, AES encryption!",
+    "algorithm": "AES"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "ciphertext": "V6cMcV+kO5PL0as9sFsbXw=="
+  }
+  ```
+
+### 3. Encryption
+- **POST /decrypt**:  
+  Decrypt ciphertext back to plaintext. 
+  **Request Body**:
+  ```json
+  {
+    "key_id": "1",
+    "ciphertext": "V6cMcV+kO5PL0as9sFsbXw==",
+    "algorithm": "AES"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "plaintext": "Hello, AES encryption!"
+  }
+  ```
+
+### 4. Hashing
+- **POST /generate-hash**:  
+  Generate a cryptographic hash (SHA-256 or SHA-512) for input data. 
+  **Request Body**:
+  ```json
+  {
+    "data": "Hello, hash process!",
+    "algorithm": "SHA-256"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "hash_value": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b1690c088b55fa6d7af413f4a3e5d3f",
+    "algorithm": "SHA-256"
+  }
+  ```
+
+  
+- **POST /verify-hash**:  
+  Verify if a given hash matches the input data.
+  **Request Body**:
+  ```json
+  {
+    "data": "Hello, hash process!",
+    "hash_value": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b1690c088b55fa6d7af413f4a3e5d3f",
+    "algorithm": "SHA-256"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "is_valid": true,
+    "message": "Hash matches the data."
+  }
+  ```
+
+
+### 5. User Authentication
+- **POST /register**:  
+  Register a new user with a username and password. 
+  **Request Body**:
+  ```json
+  {
+    "username": "user123",
+    "password": "securepassword"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "message": "User registered successfully"
+  }
+  ```
+
+- **POST /login**:  
+  Authenticate a user by verifying their username and password. 
+  **Request Body**:
+  ```json
+  {
+    "username": "user123",
+    "password": "securepassword"
+  }
+  ```
+  **Response**
+  ```json
+  {
+    "message": "Correct password. Login Successful"
+  }
+  ```
