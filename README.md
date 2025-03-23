@@ -48,4 +48,4 @@ This project implements a **Cryptographic API** using the Flask framework in Pyt
 ### Installation
 
 1. Clone the repository
-2. All the other instructions are given inside the 
+2. All the other instructions are given inside the [Milestone 2](Milestone 2/)
