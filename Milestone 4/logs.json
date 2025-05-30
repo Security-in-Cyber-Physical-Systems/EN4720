@@ -14,3 +14,6 @@
 {"timestamp": "2025-05-30T18:22:49.287295", "event": "geo_anomaly", "user_id": "user124", "ip_address": "5.6.7.8", "message": "Access from blacklisted country KP"}
 {"timestamp": "2025-05-30T18:22:49.288262", "event": "geo_anomaly", "user_id": "user123", "ip_address": "1.2.3.4", "message": "Access from known TOR exit node 1.2.3.4"}
 {"timestamp": "2025-05-30T18:22:49.288262", "event": "geo_anomaly", "user_id": "traveler123", "ip_address": "9.10.11.12", "message": "Impossible travel detected for traveler123: 10848.9 km in 10.0 minutes (speed: 65093.6 km/h)"}
+{"timestamp": "2025-05-30T20:03:28.102669", "event": "failed_login_anomaly", "user_id": "attacker", "attempt_count": 6, "time_window_minutes": 1, "message": "User attacker has 6 failed login attempts in the last 1 minutes"}
+{"timestamp": "2025-05-30T20:11:59.134975", "event": "failed_login_anomaly", "user_id": "attacker", "attempt_count": 6, "time_window_minutes": 1, "message": "User attacker has 6 failed login attempts in the last 1 minutes"}
+{"timestamp": "2025-05-30T20:16:26.348673", "event": "failed_login_anomaly", "user_id": "attacker", "attempt_count": 6, "time_window_minutes": 1, "message": "User attacker has 6 failed login attempts in the last 1 minutes"}

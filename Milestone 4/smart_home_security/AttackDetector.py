@@ -6,6 +6,7 @@ from smart_home_security.detectors.UnauthorizedAccessDetector import Unauthorize
 from smart_home_security.detectors.RoleAnomalyDetector import RoleAnomalyDetector
 from smart_home_security.detectors.PasswordResetDetector import PasswordResetDetector
 from smart_home_security.detectors.GeoAnomalyDetector import GeoAnomalyDetector
+from smart_home_security.detectors.FailedLoginDetector import FailedLoginDetector
 from smart_home_security.EventLogger import EventLogger
 
 class AttackDetector:
@@ -17,6 +18,7 @@ class AttackDetector:
         self.unauthorized_access_detector = UnauthorizedAccessDetector()
         self.role_anomaly_detector = RoleAnomalyDetector()
         self.password_reset_detector = PasswordResetDetector()
+        self.failed_login_detector = FailedLoginDetector()
         self.geo_anomaly_detector = GeoAnomalyDetector(
             blacklist_countries={'KP', 'SY', 'IR', 'CU'},
             tor_exit_nodes=self._load_tor_exit_nodes()
@@ -85,7 +87,17 @@ class AttackDetector:
                 )
                 self.logger.log_event(event_data)
                 attack_detected = True
-
+        
+        if event_name == "login_failed":
+            is_anomaly, message = self.failed_login_detector.detect(
+                user_id, timestamp
+            )
+            if is_anomaly:
+                event_data = self.failed_login_detector.get_event_data(
+                    user_id, timestamp.isoformat(), message
+                )
+                self.logger.log_event(event_data)
+                attack_detected = True
 
         if "allowed_roles" in context:
             if self.unauthorized_access_detector.detect(user_role, context["allowed_roles"]):
