@@ -1,0 +1,4 @@
+{"timestamp": "2025-05-30T10:39:56.302428", "event": "power_anomaly", "device_id": "sensor1", "value": -5.0, "average": 90.45454545454545, "message": "Negative/zero power reading for device sensor1"}
+{"timestamp": "2025-05-30T10:38:56.303185", "event": "power_anomaly", "device_id": "sensor1", "value": 200.0, "average": 109.0909090909091, "message": "Power spike detected for device sensor1 (value: 200.0, avg: 109.09)"}
+{"timestamp": "2025-05-30T10:40:32.388098", "event": "power_anomaly", "device_id": "sensor1", "value": -5.0, "average": 90.45454545454545, "message": "Negative/zero power reading for device sensor1"}
+{"timestamp": "2025-05-30T10:39:32.389097", "event": "power_anomaly", "device_id": "sensor1", "value": 200.0, "average": 109.0909090909091, "message": "Power spike detected for device sensor1 (value: 200.0, avg: 109.09)"}
