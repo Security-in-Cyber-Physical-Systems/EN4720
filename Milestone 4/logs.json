@@ -4,3 +4,4 @@
 {"timestamp": "2025-05-30T10:39:32.389097", "event": "power_anomaly", "device_id": "sensor1", "value": 200.0, "average": 109.0909090909091, "message": "Power spike detected for device sensor1 (value: 200.0, avg: 109.09)"}
 {"timestamp": "2025-05-30T10:50:27.060274", "event": "power_anomaly", "device_id": "sensor1", "value": -5.0, "average": 90.45454545454545, "message": "Negative/zero power reading for device sensor1"}
 {"timestamp": "2025-05-30T10:49:27.061694", "event": "power_anomaly", "device_id": "sensor1", "value": 200.0, "average": 109.0909090909091, "message": "Power spike detected for device sensor1 (value: 200.0, avg: 109.09)"}
+{"timestamp": "2025-05-30T11:33:00.522723", "event": "unauthorized_access_attempt", "user_id": "user1", "user_role": "USER", "source_id": "192.168.1.1", "allowed_roles": ["ADMIN"], "message": "User user1 with role USER attempted unauthorized action"}

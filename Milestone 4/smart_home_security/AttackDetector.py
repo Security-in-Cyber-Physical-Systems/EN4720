@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Dict, Any
 
 from smart_home_security.detectors.PowerAnomalyDetector import PowerAnomalyDetector
+from smart_home_security.detectors.UnauthorizedAccessDetector import UnauthorizedAccessDetector
 from smart_home_security.EventLogger import EventLogger
 
 class AttackDetector:
@@ -10,6 +11,7 @@ class AttackDetector:
         
         # Initialize all detectors
         self.power_anomaly_detector = PowerAnomalyDetector()
+        self.unauthorized_access_detector = UnauthorizedAccessDetector()
     
     def instrument(self, event_name: str, user_role: str, user_id: str, 
                   source_id: str, timestamp: datetime, context: Dict[str, Any]) -> bool:
@@ -27,5 +29,17 @@ class AttackDetector:
                     )
                     self.logger.log_event(event_data)
                     attack_detected = True
+
+        if "allowed_roles" in context:
+            if self.unauthorized_access_detector.detect(user_role, context["allowed_roles"]):
+                event_data = self.unauthorized_access_detector.get_event_data(
+                    user_role,
+                    context["allowed_roles"],
+                    timestamp.isoformat(),
+                    user_id,
+                    source_id
+                )
+                self.logger.log_event(event_data)
+                attack_detected = True
         
         return attack_detected
