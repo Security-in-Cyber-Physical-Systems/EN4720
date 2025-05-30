@@ -1,5 +1,17 @@
 # Smart Home Security - Attack Detection
 
+## Requirements
+
+1. Install the GeoIP2 database and library:
+    ```
+    pip install geoip2
+    ```
+
+2. Download the GeoLite2 City database from MaxMind:
+    https://dev.maxmind.com/geoip/geoip2/geolite2/
+    
+**Note:** The GeoLite2 City database has already downloaded and inserted into the repository.
+
 ## How to Run Tests
 
 1. Open terminal in the project folder (`Milestone 4`)
