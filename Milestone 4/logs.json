@@ -1,3 +1,16 @@
 {"timestamp": "2025-05-30T16:11:35.991277", "event": "power_anomaly", "device_id": "sensor1", "value": -5.0, "average": 90.45454545454545, "message": "Negative/zero power reading for device sensor1"}
 {"timestamp": "2025-05-30T16:10:35.991277", "event": "power_anomaly", "device_id": "sensor1", "value": 200.0, "average": 109.0909090909091, "message": "Power spike detected for device sensor1 (value: 200.0, avg: 109.09)"}
 {"timestamp": "2023-01-01T21:00:00", "event": "role_anomaly", "user_id": "user2", "roles": ["guest", "admin"], "message": "User user2 logged in with multiple roles (admin, guest) outside business hours (9 AM - 6 PM)", "is_business_hours": false}
+{"timestamp": "2025-05-30T16:35:13.691785", "event": "password_reset_anomaly", "user_id": "user5", "attempt_count": 4, "time_window_minutes": 5, "message": "User user5 made 4 password reset attempts in the last 5 minutes"}
+{"timestamp": "2025-05-30T16:35:57.557379", "event": "password_reset_anomaly", "user_id": "user5", "attempt_count": 4, "time_window_minutes": 5, "message": "User user5 made 4 password reset attempts in the last 5 minutes"}
+{"timestamp": "2025-05-30T17:16:34.519014", "event": "geo_anomaly", "user_id": "user5", "ip_address": "51.15.125.1", "message": "Access from known TOR exit node 51.15.125.1"}
+{"timestamp": "2025-05-30T17:17:05.130162", "event": "geo_anomaly", "user_id": "user5", "ip_address": "51.15.125.1", "message": "Access from known TOR exit node 51.15.125.1"}
+{"timestamp": "2025-05-30T17:17:31.386685", "event": "geo_anomaly", "user_id": "user5", "ip_address": "51.15.125.1", "message": "Access from known TOR exit node 51.15.125.1"}
+{"timestamp": "2025-05-30T17:17:41.017292", "event": "geo_anomaly", "user_id": "user5", "ip_address": "51.15.125.1", "message": "Access from known TOR exit node 51.15.125.1"}
+{"timestamp": "2025-05-30T17:25:46.049990", "event": "geo_anomaly", "user_id": "user5", "ip_address": "51.15.125.1", "message": "Access from known TOR exit node 51.15.125.1"}
+{"timestamp": "2023-01-01T21:00:00", "event": "role_anomaly", "user_id": "user2", "roles": ["admin", "guest"], "message": "User user2 logged in with multiple roles (admin, guest) outside business hours (9 AM - 6 PM)", "is_business_hours": false}
+{"timestamp": "2025-05-30T18:13:40.878192", "event": "geo_anomaly", "user_id": "user124", "ip_address": "5.6.7.8", "message": "Access from blacklisted country KP"}
+{"timestamp": "2025-05-30T18:13:40.878701", "event": "geo_anomaly", "user_id": "user123", "ip_address": "1.2.3.4", "message": "Access from known TOR exit node 1.2.3.4"}
+{"timestamp": "2025-05-30T18:22:49.287295", "event": "geo_anomaly", "user_id": "user124", "ip_address": "5.6.7.8", "message": "Access from blacklisted country KP"}
+{"timestamp": "2025-05-30T18:22:49.288262", "event": "geo_anomaly", "user_id": "user123", "ip_address": "1.2.3.4", "message": "Access from known TOR exit node 1.2.3.4"}
+{"timestamp": "2025-05-30T18:22:49.288262", "event": "geo_anomaly", "user_id": "traveler123", "ip_address": "9.10.11.12", "message": "Impossible travel detected for traveler123: 10848.9 km in 10.0 minutes (speed: 65093.6 km/h)"}
