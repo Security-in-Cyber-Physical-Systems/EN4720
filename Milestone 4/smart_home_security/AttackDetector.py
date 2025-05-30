@@ -7,6 +7,7 @@ from smart_home_security.detectors.RoleAnomalyDetector import RoleAnomalyDetecto
 from smart_home_security.detectors.PasswordResetDetector import PasswordResetDetector
 from smart_home_security.detectors.GeoAnomalyDetector import GeoAnomalyDetector
 from smart_home_security.detectors.FailedLoginDetector import FailedLoginDetector
+from smart_home_security.detectors.ToggleSpamDetector import ToggleSpamDetector
 from smart_home_security.EventLogger import EventLogger
 
 class AttackDetector:
@@ -19,21 +20,11 @@ class AttackDetector:
         self.role_anomaly_detector = RoleAnomalyDetector()
         self.password_reset_detector = PasswordResetDetector()
         self.failed_login_detector = FailedLoginDetector()
+        self.toggle_spam_detector = ToggleSpamDetector()
         self.geo_anomaly_detector = GeoAnomalyDetector(
-            blacklist_countries={'KP', 'SY', 'IR', 'CU'},
-            tor_exit_nodes=self._load_tor_exit_nodes()
+            blacklist_countries={'KP', 'SY', 'IR', 'CU'}
         )
     
-    def _load_tor_exit_nodes(self) -> Set[str]:
-        """Load known TOR exit nodes (simplified example)"""
-        # In production, you would fetch this from:
-        # https://check.torproject.org/torbulkexitlist
-        return {
-            '51.15.125.1',
-            '62.210.254.133',
-            '185.220.101.204'
-        }
-
     
     def instrument(self, event_name: str, user_role: str, user_id: str, 
                   source_id: str, timestamp: datetime, context: Dict[str, Any]) -> bool:
@@ -84,6 +75,20 @@ class AttackDetector:
             if is_anomaly:
                 event_data = self.password_reset_detector.get_event_data(
                     user_id, timestamp.isoformat(), message
+                )
+                self.logger.log_event(event_data)
+                attack_detected = True
+
+        if event_name == "device_toggle":
+            is_anomaly, message = self.toggle_spam_detector.detect(
+                context["device_id"],  # Expects device_id in context
+                timestamp
+            )
+            if is_anomaly:
+                event_data = self.toggle_spam_detector.get_event_data(
+                    context["device_id"],
+                    timestamp.isoformat(),
+                    message
                 )
                 self.logger.log_event(event_data)
                 attack_detected = True
