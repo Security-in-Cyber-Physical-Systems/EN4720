@@ -16,10 +16,19 @@
 
 1. Open terminal in the project folder (`Milestone 4`)
 2. Run the tests:
-```bash
-# Run all auth tests
-python -m unittest tests.test_power_anomaly
 
+```bash
+# Run all tests
+python -m unittest tests.test_failed_login
+python -m unittest tests.test_geo_anomaly
+python -m unittest tests.test_password_reset
+python -m unittest tests.test_power_anomaly
+python -m unittest tests.test_role_anomaly
+python -m unittest tests.test_toggle_spam
+python -m unittest tests.test_unauthorized_access
+```
+
+```bash
 # Run only unit tests
 python -m unittest tests.test_power_anomaly.TestPowerAnomalyDetector
 
